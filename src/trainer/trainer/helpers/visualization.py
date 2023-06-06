@@ -12,7 +12,8 @@ from PIL import Image, ImageDraw, ImageFont
 from torch import BoolTensor, FloatTensor, LongTensor
 
 from .util import convert_xywh_to_ltrb
-
+import os
+font_file=os.path.join(os.getenv("PROJECT_DIR",""),"font/LiberationSerif-Regular.ttf")
 
 def convert_layout_to_image(
     boxes: FloatTensor,
@@ -25,7 +26,7 @@ def convert_layout_to_image(
 ):
     H, W = canvas_size
     if names:
-        font = ImageFont.truetype("font/LiberationSerif-Regular.ttf", W // 10)
+        font = ImageFont.truetype(font_file, W // 10)
 
     if resources:
         img = resources["img_bg"].resize((W, H))
@@ -127,8 +128,8 @@ def save_label(
     x_offset, y_offset = 500, 100
 
     img = Image.new("RGBA", (1000, 1000))
-    fnt = ImageFont.truetype("font/LiberationSerif-Regular.ttf", 40)
-    fnt_sm = ImageFont.truetype("font/LiberationSerif-Regular.ttf", 32)
+    fnt = ImageFont.truetype(font_file, 40)
+    fnt_sm = ImageFont.truetype(font_file, 32)
     d = ImageDraw.Draw(img)
 
     if isinstance(labels, LongTensor):
@@ -197,8 +198,8 @@ def save_label_with_size(
     B = 32
 
     img = Image.new("RGBA", (1000, 1000))
-    fnt = ImageFont.truetype("font/LiberationSerif-Regular.ttf", 40)
-    fnt_sm = ImageFont.truetype("font/LiberationSerif-Regular.ttf", 32)
+    fnt = ImageFont.truetype(font_file, 40)
+    fnt_sm = ImageFont.truetype(font_file, 32)
     d = ImageDraw.Draw(img)
 
     for i, l in enumerate(labels):
@@ -282,8 +283,8 @@ def save_relation(
 
     space, pad = 6, 6
     img = Image.new("RGBA", (1000, 1000))
-    fnt = ImageFont.truetype("font/LiberationSerif-Regular.ttf", 20)
-    fnt_sm = ImageFont.truetype("font/LiberationSerif-Regular.ttf", 16)
+    fnt = ImageFont.truetype(font_file, 20)
+    fnt_sm = ImageFont.truetype(font_file, 16)
     d = ImageDraw.Draw(img)
 
     def draw_text(x_offset, y_offset, text, color=None, first=False):
